@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Categories Page</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+}
+
+/* ================= TOP BAR ================= */
+.top-bar {
+  padding: 20px 40px;
+}
+
+.filter-btn {
+  font-size: 26px;
+  font-weight: 200;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+   }
+
+.filter-btn span {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  padding: 6px;
+  transform: rotate(45deg);
+  }
+
+/* ================= LAYOUT ================= */
+.container {
+  display: flex;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  width: 220px;
+  min-height: 100vh;
+}
+
+.left-panel img {
+  width: 100%;
+  margin-top: 20px;
+  
+}
+
+/* ================= GREEN FILTER PANEL ================= */
+.filter-panel {
+  display: none;
+  background: #4CAF50;
+  padding: 25px 20px;
+  color: white;
+  border-radius: 0 12px 0 0;
+}
+
+.filter-section {
+  margin-bottom: 30px;
+}
+
+.filter-section h3 {
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.filter-section label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.filter-section input {
+  width: 18px;
+  height: 18px;
+  accent-color: white;
+}
+
+.filter-submit {
+  width: 80%;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #fff;
+  margin-left: 30px;
+}
+
+/* ================= PRODUCTS ================= */
+.products {
+  flex: 1;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* CARD */
+.card {
+  background: #eee;
+  border-radius: 12px;
+  position: relative;
+  padding: 10px;
+  width: 250px;
+  Height:300px;
+  margin-left: 20px;
+  box-shadow:0px 1px 4px 0px #999999;
+  }
+
+.card img.product {
+  width: 100%;
+  
+}
+
+.discount {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #c3e01f;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+}
+
+.heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.heart img {
+  width: 24px;
+}
+
+.heart .dot {
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: none;
+}
+
+.category {
+  color: #078F20;
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 200;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.weight {
+  font-size: 14px;
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: -70px;
+  margin-left: 180px;
+}
+
+.rating img {
+  width: 18px;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+.add-btn {
+  margin-top: 8px;
+  border: 1px solid #000;
+  background: #fff;
+  border-radius: 20px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  margin-left: 150px;
+  margin-top: 5px;
+}
+
+.add-btn img {
+  width: 16px;
+}
+/* ================= FOOTER ================= */
+
+/* ================= FOOTER ================= */
+.footer {
+    background: #F29B03;
+    padding: 40px 60px 20px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* MAIN LAYOUT */
+.footer-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+/* LEFT IMAGE – PUSHED TO BOTTOM */
+.footer-image
+ {
+    display: flex;
+    align-items: flex-end;
+}
+
+.footer-image img {
+    width: 150px;
+    margin-top: 10px;
+  }
+
+/* LOGO + SOCIAL */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-logo {
+    width: 140px;
+}
+
+.follow-text {
+    font-size: 18px;
+}
+
+.social-icons img {
+    width: 36px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* COLUMNS */
+.footer-col {
+    min-width: 160px;
+}
+
+.footer-col h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-col p {
+    font-size: 18px;
+    margin: 6px 0;
+}
+
+/* COPYRIGHT TEXT (SHADOW ONLY) */
+.footer-bottom {
+    margin-top: -50px;
+   margin-left: 450px;
+    text-align: center;
+    font-size: 16px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+  <div class="filter-btn" id="filterBtn" onclick="toggleFilter()">
+    Filter <span></span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+
+    <img src="Groceries-main.png" id="filterImage">
+
+    <div class="filter-panel" id="filterPanel">
+
+      <div class="filter-section">
+        <h3>Types of products</h3>
+        <label><input type="checkbox"> Groceries</label>
+        <label><input type="checkbox"> Fresh Fruits</label>
+        <label><input type="checkbox"> Milk & Egg</label>
+        <label><input type="checkbox"> Bakery</label>
+        <label><input type="checkbox"> Vegetables</label>
+        <label><input type="checkbox"> Dry Fruits</label>
+      </div>
+
+      <div class="filter-section">
+        <h3>Special offer</h3>
+        <label><input type="radio" name="offer"> Discount</label>
+        <label><input type="radio" name="offer"> Last minute deals</label>
+        <label><input type="radio" name="offer"> All-inclusive</label>
+      </div>
+
+      <div class="filter-section">
+        <h3>Prices Section</h3>
+        <label><input type="radio" name="price"> Low to High</label>
+        <label><input type="radio" name="price"> High to Low</label>
+        <label><input type="radio" name="price"> 2500 & Below</label>
+      </div>
+
+      <div class="filter-section">
+        <h3>Ratings</h3>
+        <label><input type="radio" name="rating"> ⭐⭐⭐⭐⭐</label>
+        <label><input type="radio" name="rating"> 4 star & Above</label>
+      </div>
+
+    <button class="filter-submit">Submit</button>
+    </div>
+
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="products" id="products"></div>
+
+</div>
+<footer class="footer">
+
+    <div class="footer-main">
+
+        <!-- LEFT IMAGE -->
+        <div class="footer-image">
+            <img src="Footer1.png" alt="Footer Image">
+        </div>
+
+        <!-- LOGO + SOCIAL -->
+        <div class="footer-brand">
+            <img src="logo.png" class="footer-logo">
+
+            <p class="follow-text">Follow Us On :</p>
+
+            <div class="social-icons">
+                <img src="FB.png">
+                <img src="Insta.png">
+                <img src="WA.png">
+            </div>
+        </div>
+
+        <!-- COMPANY -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <p>About us</p>
+            <p>Blog</p>
+            <p>Contact us</p>
+            <p>Career</p>
+        </div>
+
+        <!-- CUSTOMER SERVICE -->
+        <div class="footer-col">
+            <h4>Customer service</h4>
+            <p>My Account</p>
+            <p>Track your order</p>
+            <p>Return</p>
+            <p>FAQ</p>
+        </div>
+
+        <!-- INFORMATION -->
+        <div class="footer-col">
+            <h4>Our information</h4>
+            <p>Privacy</p>
+            <p>User terms & Conditions</p>
+            <p>Return Policy</p>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-col">
+            <h4>Contact info</h4>
+            <p>123-456-789</p>
+            <p>example@gmail.com</p>
+            <p>72, North Street</p>
+            <p>Mumbai - 001</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 My Market. All rights reserved.<br>
+        Terms & Conditions | Privacy Policy.
+    </div>
+
+</footer>
+
+<script>
+const products = [
+  {img:"Categories1.png", name:"Ashirvaad Atta", price:200},
+  {img:"Categories2.png", name:"Cabbage", price:134},
+  {img:"Categories3.png", name:"Fortune Oil", price:304},
+  {img:"Categories4.png", name:"Banana", price:14},
+  {img:"Categories5.png", name:"Chocolate", price:234},
+  {img:"Categories6.png", name:"Onion", price:114},
+  {img:"Categories7.png", name:"Cashew", price:144},
+  {img:"Categories8.png", name:"Apple", price:320},
+  {img:"Categories9.png", name:"Tomato", price:114},
+];
+
+const container = document.getElementById("products");
+
+products.forEach(p => {
+  container.innerHTML += `
+    <div class="card">
+      <div class="discount">20% off</div>
+
+      <div class="heart" onclick="toggleHeart(this)">
+        <img src="heart-outline.png">
+        <div class="dot"></div>
+      </div>
+
+      <img src="${p.img}" class="product">
+
+      <div class="category">Grocery</div>
+      <div class="name">${p.name}</div>
+      <div class="weight">500g</div>
+
+      <div class="rating">
+        <img src="Star.png"> 4.5
+      </div>
+
+      <div class="price">$${p.price}</div>
+
+      <button class="add-btn">
+        Add <img src="Cart.png">
+      </button>
+    </div>
+  `;
+});
+
+function toggleFilter() {
+  const panel = document.getElementById("filterPanel");
+  const img = document.getElementById("filterImage");
+  const btn = document.getElementById("filterBtn");
+
+  if (panel.style.display === "block") {
+    panel.style.display = "none";
+    img.style.display = "block";
+    btn.style.display = "inline-flex";
+  } else {
+    panel.style.display = "block";
+    img.style.display = "none";
+    btn.style.display = "none";
+  }
+}
+
+function toggleHeart(el) {
+  const dot = el.querySelector(".dot");
+  dot.style.display = dot.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>

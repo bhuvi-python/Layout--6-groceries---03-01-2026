@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Form</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Crimson Text', serif;
+}
+
+/* ================= FINAL HEADER ================= */
+header{
+    padding: 20px;
+    background: #ffffff;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* ================= PAGE LAYOUT ================= */
+.contact-wrapper{
+    display: flex;
+    max-width: 1470px;
+    margin: 40px auto;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.25);
+}
+
+/* LEFT FORM SECTION */
+.form-section{
+    background: #4CAF50;
+    padding: 40px 60px;
+    width: 55%;
+}
+
+.form-row{
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.form-group{
+    flex: 1;
+}
+
+label{
+    display: block;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+input, textarea{
+    width: 100%;
+    padding: 18px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    outline: none;
+}
+
+textarea{
+    height: 230px;
+    resize: none;
+}
+
+/* RIGHT IMAGE SECTION */
+.image-section{
+    width: 45%;
+    background: url('H-Enquiry.png') center/cover no-repeat;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px){
+    .contact-wrapper{
+        flex-direction: column;
+    }
+    .form-section,
+    .image-section{
+        width: 100%;
+    }
+    .image-section{
+        height: 400px;
+    }
+}
+
+@media (max-width: 600px){
+    .form-row{
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+/* ================= FINAL FOOTER ================= */
+footer{
+    padding: 20px;
+    background: #ffffff;
+    text-align: center;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== FINAL HEADER (Replace with your saved Final Header code) ===== -->
+<header>
+    FINAL HEADER
+</header>
+
+<!-- ================= CONTACT PAGE ================= -->
+<div class="contact-wrapper">
+
+    <!-- LEFT FORM -->
+    <div class="form-section">
+        <div class="form-row">
+            <div class="form-group">
+                <label>First Name*</label>
+                <input type="text" placeholder="Ex. john">
+            </div>
+            <div class="form-group">
+                <label>Last Name*</label>
+                <input type="text" placeholder="Ex. Doe">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>E-mail*</label>
+                <input type="email" placeholder="example@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>Phone*</label>
+                <input type="text" placeholder="enter phone num">
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:30px">
+            <label>Subject*</label>
+            <input type="text" placeholder="Enter here">
+        </div>
+
+        <div class="form-group">
+            <label>Your Message*</label>
+            <textarea placeholder="Enter here"></textarea>
+        </div>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="image-section"></div>
+
+</div>
+
+<!-- ===== FINAL FOOTER (Replace with your saved Final Footer code) ===== -->
+<footer>
+    FINAL FOOTER
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Checkout Page</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+ 
+ <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+    background: #fff;
+}
+
+/* ================= HEADER ================= */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 60px;
+    background: #fff;
+    position: relative;
+}
+
+.logo img {
+    height: 70px;
+}
+
+.search-bar {
+    flex: 1;
+    margin: 0 40px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 25px 60px 25px 25px;
+    border-radius: 50px;
+    border: none;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 100px;
+}
+.search-bar input::placeholder {
+    color: #fff;
+}
+.search-bar img {
+    position: absolute;
+    right: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+}
+
+/* ICON AREA */
+.header-icons {
+    display: flex;  
+    align-items: center;
+    gap: 22px;
+    position: relative;
+}
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.icon-wrap {
+    position: relative;
+    cursor: pointer;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+}
+
+.red-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    display: none;
+}
+
+/* DROPDOWN */
+.dropdown-panel {
+    position: absolute;
+    top: 85px;
+    right: 40px;
+    background: #4CAF50;
+    color: #fff;
+    width: 260px;
+    border-radius: 10px;
+    padding: 15px;
+    display: none;
+    z-index: 99;
+    font-size: 22px;
+}
+.dropdown-panel a{
+    text-decoration: none;
+    color: white;
+}
+.dropdown-panel p {
+    margin: 10px 0;
+    cursor: pointer;
+}
+/* HORIZONTAL LINE WITH SIDE GAP */
+.dropdown-line{
+    display: block;
+    width: 85%;              /* 👈 line does NOT touch edges */
+    height: 2px;
+    background: #ffffff;
+    margin: 6px auto 12px;   /* 👈 centers the line */
+    border-radius: 2px;
+}
+
+/* ✅ HORIZONTAL LINE AFTER "MY ACCOUNTS" */
+.dropdown-line{
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #ffffff;   /* line color */
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+/* NOTIFICATION POPUP */
+.notification-box {
+    position: absolute;
+    top: 165px;
+    right: 0px;
+    background: #4CAF50;
+    padding: 18px 22px;
+    border-radius: 14px;
+    width: 1000px;
+    color: #000;
+    z-index: 999;
+    display: none;
+}
+
+/* HEADER */
+.notify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* CLOSE ICON */
+.close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* LIST */
+.notify-list {
+    padding-left: 18px;
+}
+
+.notify-list li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* ================= PAGE TRANSITION (VERY VERY SLOW) ================= */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0); /* transparent start */
+  pointer-events: none;
+  z-index: 9999;
+  transition: background 5s ease-in-out;
+}
+
+#page-transition.active {
+  background: rgba(0, 0, 0, 0.55); /* slow dark transparent fade */
+}
+
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px 0;
+    font-weight: 600;
+    margin-right: 100px;
+}
+.navbar a{
+    text-decoration: none;
+    color: #000;
+}
+.navbar .active{
+    color: #2AB22F;
+}
+ 
+ 
+ 
+/* ================= STEP BAR ================= */
+.step-bar {
+    width: 50%;
+    margin: 40px auto;
+    background: #4CAF50;
+    border-radius: 12px;
+    padding: 22px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 20px;
+}
+
+.radio {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.step.active .radio span {
+    background: #fff;
+}
+
+/* ================= MAIN CONTENT ================= */
+.container {
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    gap: 40px;
+}
+
+/* ================= PRODUCT TABLE ================= */
+.products {
+    flex: 2;
+}
+
+.header-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 150px 140px;
+    background: #4CAF50;
+    padding: 18px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.product-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 150px 140px;
+    align-items: center;
+    padding: 18px;
+    border: 1px solid #ccc;
+    margin-top: 0px;
+    border-radius: 8px;
+}
+/* Move ONLY the "Names" header to the right */
+.header-row > div:nth-child(2) {
+    margin-left: 70px;   /* adjust value if needed */
+}
+/* Move Quantity column slightly to the left */
+.header-row > div:nth-child(3) {
+    margin-left: -35px;   /* adjust if needed */
+}
+
+.product-row > .qty-box {
+    margin-left: -55px;   /* same value to match header */
+}
+
+.product-row img {
+    width: 100px;
+    border-radius: 10px;
+    height: 100px;
+    box-shadow: 0 4px 4px rgba(0,0,0,0.25);
+}
+
+.product-name {
+    width: 220px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-left: 50px;   /* ← move text to the right */
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== Quantity box ===== */
+.qty-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 30px;
+    overflow: hidden;
+    width: 130px;
+    height: 42px;
+}
+
+.qty-box button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    background: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.qty-box span {
+    width: 46px;
+    text-align: center;
+    font-size: 20px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* ================= SUMMARY ================= */
+.summary {
+    width: 360px;
+    height:450px;
+    border: 1px solid #000;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 3px 4px 4px rgba(0,0,0,0.25);
+}
+.summary-value {
+    font-weight: 700;  /* makes it bold */
+}
+
+.summary h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.summary hr {
+    margin: 12px 0;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: 25px;
+}
+
+.summary .total {
+    font-weight: 700;
+}
+
+.checkout-btn {
+    margin-top: 20px;
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+/* ================= BOTTOM BAR ================= */
+.bottom-bar {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+   
+}
+
+.bottom-bar input {
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #aaa;
+    width: 180px;
+    text-align: center;
+     font-size: 20px;
+}
+
+.copy-btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    background: #4CAF50;
+    border: none;
+    font-size: 18px;
+    text-align: center;
+}
+
+.clear-btn {
+    position: relative;
+    font-size: 15px;
+    color: #F29B03;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 100px;
+}
+ 
+ 
+.clear-cart-wrapper{
+  width: fit-content;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.clear-text{
+  font-size: 22px;
+  color: orange;
+  margin-bottom: 8px;
+}
+
+/* line + dots */
+.line-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot{
+  width: 10px;
+  height: 10px;
+  background: #000;
+  border-radius: 50%;
+}
+
+.line{
+  width: 160px;
+  height: 2px;
+  background: #000;
+}
+
+
+</style>
+</head>
+
+<body>
+ 
+ 
+ <header>
+    <div class="logo"><img src="logo.png"></div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search product category">
+        <img src="Search.png">
+    </div>
+
+    <div class="header-icons">
+
+        <img src="DP.png" class="profile-img" id="profileBtn">
+
+        <div class="icon-wrap" id="heartBtn">
+            <img src="Menu-Heart.png" class="icon">
+            <span class="red-dot" id="heartDot"></span>
+        </div>
+
+        <div class="icon-wrap" id="cartBtn">
+            <img src="Menu-Cart.png" class="icon">
+            <span class="red-dot" id="cartDot"></span>
+        </div>
+
+        <div class="icon-wrap" id="bellBtn">
+            <img src="Menu-Bell.png" class="icon">
+        </div>
+
+    </div>
+</header>
+
+<!-- DROPDOWNS -->
+<div class="dropdown-panel" id="accountMenu">
+    <p>My Accounts</p>
+   <span class="dropdown-line"></span>
+    <a href="1.profile-PersonalInfo.html"><p>Personal Information</p></a>
+    <p>My Order</p>
+    <a href="1.pro-trackorder.html"><p>Tracking Order</p></a>
+    <a href="1.pro-personal-pw.html"><p>Password Manager</p></a>
+    <a href="1.pro-Logout.html"><p>Logout</p></a>
+</div>
+
+<!-- NOTIFICATION POPUP -->
+<div class="notification-box" id="notifyBox">
+    <div class="notify-header">
+        <span>Order Updates</span>
+        <span class="close-btn" onclick="closeNotify()">✕</span>
+    </div>
+
+    <ul class="notify-list">
+        <li>“Your order has been placed successfully! We'll notify you once it’s out for delivery.”</li>
+        <li>“Good news! Your groceries are on the way. Track your delivery in real time.”</li>
+        <li>“Your order has been delivered. Thank you for shopping with us!”</li>
+    </ul>
+</div>
+
+<nav class="navbar">
+    <a href="1.Header with Flows.html"><span>Home</span>
+    <a href="1.shopping.html"><span>Shopping</span></a>
+    <a href="1.categories.html"><span>Categories</span></a>
+    <a href="1.blog.html"><span>Blogs</span></a>
+    <a href="1.contactus.html"><span>Contact Us</span></a>
+    <a href="1.aboutus.html"><span>About Us</span></a>
+</nav>
+<!-- STEP BAR -->
+<div class="step-bar">
+    <div class="step active" onclick="setStep(0)">
+        <div class="radio"><span></span></div>
+        Product card
+    </div>
+    <div class="step" onclick="setStep(1)">
+        <div class="radio"><span></span></div>
+        Check out page
+    </div>
+    <div class="step" onclick="setStep(2)">
+        <div class="radio"><span></span></div>
+        Payment page
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="products">
+        <div class="header-row">
+            <div>Product</div>
+            <div>Names</div>
+            <div>Quantity</div>
+            <div>Subtotal</div>
+        </div>
+
+        <div class="product-row">
+            <img src="Wishlist1.png">
+            <div class="product-name">Ashirvaad Atta</div>
+            <div class="qty-box">
+                <button>-</button><span>1</span><button>+</button>
+            </div>
+            <div class="price">$200</div>
+        </div>
+
+        <div class="product-row">
+            <img src="Wishlist2.png">
+            <div class="product-name">Fresh Banana</div>
+            <div class="qty-box">
+                <button>-</button><span>1</span><button>+</button>
+            </div>
+            <div class="price">$14</div>
+        </div>
+
+        <div class="product-row">
+            <img src="Wishlist3.png">
+            <div class="product-name">Cabbage</div>
+            <div class="qty-box">
+                <button>-</button><span>1</span><button>+</button>
+            </div>
+            <div class="price">$134</div>
+        </div>
+
+        <div class="bottom-bar">
+            <input value="Couponcode">
+            <button class="copy-btn">Apply Coupon</button>
+            <div class="clear-btn">
+    <div class="clear-cart-wrapper">
+  <p class="clear-text">Clear Shopping cart</p>
+
+  <div class="line-container">
+    <span class="dot"></span>
+    <span class="line"></span>
+    <span class="dot"></span>
+  </div>
+</div>
+
+</div>
+        </div>
+    </div>
+
+    <div class="summary">
+        <h3>Order Summary</h3>
+        <hr>
+        <div class="summary-row"><span>Items</span><span class="summary-value">3</span></span></div>
+<div class="summary-row">
+   
+</div>
+
+<div class="summary-row">
+    <span>Subtotal</span>
+    <span class="bold-value"><b>$.348</b></span>
+</div>
+
+<div class="summary-row">
+    <span>Shipping</span>
+    <span>Rs.00.0</span>
+</div>
+
+<div class="summary-row">
+    <span>Taxes</span>
+    <span>Rs.00.0</span>
+</div>
+
+<div class="summary-row">
+    <span>Coupon Discount</span>
+    <span class="bold-value"><b>$.100</b></span>
+</div>
+
+        <hr>
+        <div class="summary-row total"><span>Total</span><span>$.248</span></div>
+        <a href="1.cart-pc1.html"><button class="checkout-btn">Proceed to checkout</button></a>
+    </div>
+
+</div>
+
+<script>
+function setStep(index) {
+    document.querySelectorAll('.step').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+    });
+}
+</script>
+
+</body>
+</html>

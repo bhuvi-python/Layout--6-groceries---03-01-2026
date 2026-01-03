@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>groceries Page</title>
+ <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+ <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+body {
+    background: #fff;
+}
+
+/* ================= HEADER ================= */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 60px;
+    background: #fff;
+    position: relative;
+}
+
+.logo img {
+    height: 70px;
+}
+
+.search-bar {
+    flex: 1;
+    margin: 0 40px;
+    position: relative;
+}
+
+.search-bar input {
+    width: 80%;
+    padding: 25px 60px 25px 25px;
+    border-radius: 50px;
+    border: none;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 100px;
+}
+.search-bar input::placeholder {
+    color: #fff;
+}
+.search-bar img {
+    position: absolute;
+    right: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+}
+
+/* ICON AREA */
+.header-icons {
+    display: flex;  
+    align-items: center;
+    gap: 22px;
+    position: relative;
+}
+
+.profile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.icon-wrap {
+    position: relative;
+    cursor: pointer;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+}
+
+.red-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    display: none;
+}
+
+/* DROPDOWN */
+.dropdown-panel {
+    position: absolute;
+    top: 85px;
+    right: 40px;
+    background: #4CAF50;
+    color: #fff;
+    width: 260px;
+    border-radius: 10px;
+    padding: 15px;
+    display: none;
+    z-index: 99;
+    font-size: 22px;
+}
+.dropdown-panel a{
+    text-decoration: none;
+    color: white;
+}
+.dropdown-panel p {
+    margin: 10px 0;
+    cursor: pointer;
+}
+/* HORIZONTAL LINE WITH SIDE GAP */
+.dropdown-line{
+    display: block;
+    width: 85%;              /* 👈 line does NOT touch edges */
+    height: 2px;
+    background: #ffffff;
+    margin: 6px auto 12px;   /* 👈 centers the line */
+    border-radius: 2px;
+}
+
+/* ✅ HORIZONTAL LINE AFTER "MY ACCOUNTS" */
+.dropdown-line{
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #ffffff;   /* line color */
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+/* NOTIFICATION POPUP */
+.notification-box {
+    position: absolute;
+    top: 165px;
+    right: 0px;
+    background: #4CAF50;
+    padding: 18px 22px;
+    border-radius: 14px;
+    width: 1000px;
+    color: #000;
+    z-index: 999;
+    display: none;
+}
+
+/* HEADER */
+.notify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* CLOSE ICON */
+.close-btn {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* LIST */
+.notify-list {
+    padding-left: 18px;
+}
+
+.notify-list li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* ================= PAGE TRANSITION (VERY VERY SLOW) ================= */
+#page-transition {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0); /* transparent start */
+  pointer-events: none;
+  z-index: 9999;
+  transition: background 5s ease-in-out;
+}
+
+#page-transition.active {
+  background: rgba(0, 0, 0, 0.55); /* slow dark transparent fade */
+}
+
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px 0;
+    font-weight: 600;
+    margin-right: 100px;
+}
+.navbar a{
+    text-decoration: none;
+    color: #000;
+}
+.navbar .active{
+    color: #2AB22F;
+}
+ 
+ 
+
+/* MAIN LAYOUT */
+.container {
+  display: flex;
+  padding: 18px;
+  gap: 20px;
+}
+
+/* LEFT FILTER PANEL */
+.filter-panel {
+  width: 260px;
+  background: #4CAF50;
+  border-radius: 12px;
+  padding: 25px 20px;
+  color: white;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+}
+
+.filter-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.filter-item input {
+  width: 16px;
+  height: 16px;
+  accent-color: black;
+}
+
+.submit-btn {
+  width: 80%;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: #fff;
+  margin-left: 30px;
+}
+
+/* PRODUCTS GRID */
+.products {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* CARD */
+.card {
+  background: #eee;
+  border-radius: 12px;
+  position: relative;
+  padding: 10px;
+  width: 300px;
+  Height:350px;
+  margin-left: 20px;
+  box-shadow:0px 1px 4px 0px #999999;
+}
+
+.card img.product {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Discount */
+.discount {
+ position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #c3e01f;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+}
+
+/* Heart */
+.heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.heart img {
+  width: 20px;
+}
+
+.heart .dot {
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  display: none;
+}
+
+/* TEXT */
+.category {
+  color: #078f20;
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 200;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.weight {
+  font-size: 14px;
+  color: #777;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* RATING */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: -70px;
+  margin-left: 220px;
+}
+
+.star-icon {
+  width: 18px;
+}
+
+.rating-value {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* PRICE */
+.price {
+   font-weight: bold;
+  margin-top: 50px;
+  font-size: 18px;
+}
+
+/* ADD BUTTON */
+.add-btn {
+  margin-top: 8px;
+  border: 1px solid #000;
+  background: #fff;
+  border-radius: 20px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  margin-left: 200px;
+  margin-top: 15px
+}
+
+.add-btn img {
+  width: 16px;
+}
+/* ================= FOOTER ================= */
+.footer {
+    background: #F29B03;
+    padding: 40px 60px 20px;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* MAIN LAYOUT */
+.footer-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+/* LEFT IMAGE – PUSHED TO BOTTOM */
+.footer-image
+ {
+    display: flex;
+    align-items: flex-end;
+}
+
+.footer-image img {
+    width: 150px;
+    margin-top: 10px;
+  }
+
+/* LOGO + SOCIAL */
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-logo {
+    width: 140px;
+}
+
+.follow-text {
+    font-size: 18px;
+}
+
+.social-icons img {
+    width: 36px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* COLUMNS */
+.footer-col {
+    min-width: 160px;
+}
+
+.footer-col h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-col p {
+    font-size: 18px;
+    margin: 6px 0;
+}
+
+/* COPYRIGHT TEXT (SHADOW ONLY) */
+.footer-bottom {
+    margin-top: -50px;
+   margin-left: 450px;
+    text-align: center;
+    font-size: 16px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+</style>
+</head>
+
+<body>
+ 
+ 
+ <header>
+    <div class="logo"><img src="logo.png"></div>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Search product category">
+        <img src="Search.png">
+    </div>
+
+    <div class="header-icons">
+
+        <img src="DP.png" class="profile-img" id="profileBtn">
+
+        <div class="icon-wrap" id="heartBtn">
+            <img src="Menu-Heart.png" class="icon">
+            <span class="red-dot" id="heartDot"></span>
+        </div>
+
+        <div class="icon-wrap" id="cartBtn">
+            <img src="Menu-Cart.png" class="icon">
+            <span class="red-dot" id="cartDot"></span>
+        </div>
+
+        <div class="icon-wrap" id="bellBtn">
+            <img src="Menu-Bell.png" class="icon">
+        </div>
+
+    </div>
+</header>
+
+<!-- DROPDOWNS -->
+<div class="dropdown-panel" id="accountMenu">
+    <p>My Accounts</p>
+   <span class="dropdown-line"></span>
+    <a href="1.profile-PersonalInfo.html"><p>Personal Information</p></a>
+    <p>My Order</p>
+    <a href="1.pro-trackorder.html"><p>Tracking Order</p></a>
+    <a href="1.pro-personal-pw.html"><p>Password Manager</p></a>
+    <a href="1.pro-Logout.html"><p>Logout</p></a>
+</div>
+
+<!-- NOTIFICATION POPUP -->
+<div class="notification-box" id="notifyBox">
+    <div class="notify-header">
+        <span>Order Updates</span>
+        <span class="close-btn" onclick="closeNotify()">✕</span>
+    </div>
+
+    <ul class="notify-list">
+        <li>“Your order has been placed successfully! We'll notify you once it’s out for delivery.”</li>
+        <li>“Good news! Your groceries are on the way. Track your delivery in real time.”</li>
+        <li>“Your order has been delivered. Thank you for shopping with us!”</li>
+    </ul>
+</div>
+
+<nav class="navbar">
+    <a href="1.Header with Flows.html"><span>Home</span>
+    <a href="1.shopping.html"><span>Shopping</span></a>
+    <a href="1.categories.html" class="active"><span>Categories</span></a>
+    <a href="1.blog.html"><span>Blogs</span></a>
+    <a href="1.contactus.html"><span>Contact Us</span></a>
+    <a href="1.aboutus.html"><span>About Us</span></a>
+</nav>
+<div class="container">
+
+  <!-- FILTER PANEL -->
+  <div class="filter-panel">
+    <div class="filter-section">
+      <div class="filter-title">Types of products</div>
+      <div class="filter-item"><input type="checkbox" checked> Groceries</div>
+      <div class="filter-item"><input type="checkbox"> Fresh Fruits</div>
+      <div class="filter-item"><input type="checkbox"> Milk & Eggs</div>
+      <div class="filter-item"><input type="checkbox"> Bakery</div>
+      <div class="filter-item"><input type="checkbox"> Vegetables</div>
+      <div class="filter-item"><input type="checkbox"> Dry Fruits</div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Special offer</div>
+      <div class="filter-item"><input type="radio" name="offer"> Discount</div>
+      <div class="filter-item"><input type="radio" name="offer"> Last minute deals</div>
+      <div class="filter-item"><input type="radio" name="offer"> All-inclusive</div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Prices</div>
+      <div class="filter-item"><input type="radio" name="price"> Low to High</div>
+      <div class="filter-item"><input type="radio" name="price"> High to Low</div>
+      <div class="filter-item"><input type="radio" name="price"> 2500 & Below</div>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-title">Ratings</div>
+      <div class="filter-item"><input type="radio"> 5 Star ⭐⭐⭐⭐⭐</div>
+      <div class="filter-item"><input type="radio"> 4 star & above</div>
+    </div>
+
+    <button class="submit-btn">Submit</button>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="products">
+
+    <!-- CARD TEMPLATE (9 ITEMS) -->
+    <!-- 1 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+        <img src="heart-outline.png"><div class="dot"></div>
+      </div>
+      <img src="Groceries1.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Ashirvaad Atta</div>
+      <div class="weight">1g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$200</div>
+      <a style="text-decoration: none;"href="1.checkout2.html"><button class="add-btn">Add <img src="Cart.png"></button></a>
+    </div>
+
+    <!-- 2 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+      <img src="Groceries2.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Almond</div>
+      <div class="weight">750g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$134</div>
+      <a style="text-decoration: none;"href="1.checkout2.html"><button class="add-btn">Add <img src="Cart.png"></button></a>
+    </div>
+
+    <!-- 3 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries3.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Sugar</div>
+      <div class="weight">1Kg</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$50</div>
+     <a style="text-decoration: none;"href="1.checkout2.html"><button class="add-btn">Add <img src="Cart.png"></button></a>
+    </div>
+
+    <!-- 4 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries4.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Olive oil</div>
+      <div class="weight">500L</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$450</div>
+     <a style="text-decoration: none;"href="1.checkout2.html"><button class="add-btn">Add <img src="Cart.png"></button></a>
+    </div>
+
+    <!-- 5 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries5.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Ragi Flour</div>
+      <div class="weight">750g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$234</div>
+      <button class="add-btn">Add <img src="Cart.png"></button>
+    </div>
+
+    <!-- 6 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries6.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Gold winner</div>
+      <div class="weight">750g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$114</div>
+      <button class="add-btn">Add <img src="Cart.png"></button>
+    </div>
+
+    <!-- 7 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries7.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Dates</div>
+      <div class="weight">750g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$114</div>
+      <button class="add-btn">Add <img src="Cart.png"></button>
+    </div>
+
+    <!-- 8 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries8.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Rice flour</div>
+      <div class="weight">500g</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$332</div>
+      <button class="add-btn">Add <img src="Cart.png"></button>
+    </div>
+
+    <!-- 9 -->
+    <div class="card">
+      <div class="discount">20% off</div>
+      <div class="heart" onclick="toggleHeart(this)">
+  <img src="heart-outline.png">
+  <div class="dot"></div>
+</div>
+
+      <img src="Groceries9.png" class="product">
+      <div class="category">Grocery</div>
+      <div class="name">Ghee</div>
+      <div class="weight">1kg</div>
+      <div class="rating"><img src="Star.png" class="star-icon"><span class="rating-value">4.5</span></div>
+      <div class="price">$144</div>
+      <button class="add-btn">Add <img src="Cart.png"></button>
+    </div>
+
+  </div>
+</div>
+<footer class="footer">
+
+    <div class="footer-main">
+
+        <!-- LEFT IMAGE -->
+        <div class="footer-image">
+            <img src="Footer1.png" alt="Footer Image">
+        </div>
+
+        <!-- LOGO + SOCIAL -->
+        <div class="footer-brand">
+            <img src="logo.png" class="footer-logo">
+
+            <p class="follow-text">Follow Us On :</p>
+
+            <div class="social-icons">
+                <img src="FB.png">
+                <img src="Insta.png">
+                <img src="WA.png">
+            </div>
+        </div>
+
+        <!-- COMPANY -->
+        <div class="footer-col">
+            <h4>Company</h4>
+            <p>About us</p>
+            <p>Blog</p>
+            <p>Contact us</p>
+            <p>Career</p>
+        </div>
+
+        <!-- CUSTOMER SERVICE -->
+        <div class="footer-col">
+            <h4>Customer service</h4>
+            <p>My Account</p>
+            <p>Track your order</p>
+            <p>Return</p>
+            <p>FAQ</p>
+        </div>
+
+        <!-- INFORMATION -->
+        <div class="footer-col">
+            <h4>Our information</h4>
+            <p>Privacy</p>
+            <p>User terms & Conditions</p>
+            <p>Return Policy</p>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="footer-col">
+            <h4>Contact info</h4>
+            <p>123-456-789</p>
+            <p>example@gmail.com</p>
+            <p>72, North Street</p>
+            <p>Mumbai - 001</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2025 My Market. All rights reserved.<br>
+        Terms & Conditions | Privacy Policy.
+    </div>
+
+</footer>
+
+<script>
+function toggleHeart(el) {
+  const dot = el.querySelector(".dot");
+  dot.style.display = dot.style.display === "block" ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
